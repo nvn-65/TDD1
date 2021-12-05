@@ -1,21 +1,36 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
-
-# browser = webdriver.Firefox()
-# browser.get('http://localhost:8000')
-
-ser = Service('d:\\yandexdriver.exe')
-options = webdriver.ChromeOptions()
-driver = webdriver.Chrome(service=ser, options=options)
+import unittest
 
 
-# Эдит слышала про крутое новое онлайн-приложение со списком
-# неотложных дел. Она решает оценить его домашнюю страницу
-driver.get('http://localhost:8000')
+class NewVisitorTest(unittest.TestCase):
+    """тест нового посетителя"""
 
-# Она видит, что заголовок и шапка страницы говорят о списках
-# неотложных дел
-# assert 'To-Do' in driver.title
+    def setUp(self) -> None:
+        """установка"""
+
+    # browser = webdriver.Firefox()
+    # browser.get('http://localhost:8000')
+
+    ser = Service('d:\\yandexdriver.exe')
+    options = webdriver.ChromeOptions()
+    browser = webdriver.Chrome(service=ser, options=options)
+
+    def tearDown(self) -> None:
+        """завершение"""
+        self.browser.quit()
+
+    def test_can_start_a_list_and_retrieve_it_later(self):
+        """тест.можно начать список и получить его позже"""
+        # Эдит слышала про крутое новое онлайн-приложение со списком
+        # неотложных дел. Она решает оценить его домашнюю страницу
+        self.browser.get('http://localhost:8000')
+
+        # Она видит, что заголовок и шапка страницы говорят о списках
+        # неотложных дел
+        self.assertIn('To-Do', self.browser.title)
+        self.fail('Закончить тест')  # Напоминание об окончании теста
+
 
 # Ей сразу же предлагается ввести элемент списка
 
@@ -36,4 +51,7 @@ driver.get('http://localhost:8000')
 
 # Она посещает этот URL-адрес – ее список по-прежнему там.
 # Удовлетворенная, она снова ложится спать
-# driver.quit()
+
+
+if __name__ == '__main':
+    unittest.main()
