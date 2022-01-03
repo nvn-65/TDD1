@@ -103,7 +103,9 @@ class NewVisitorTest(LiveServerTestCase):
         ## Мы используем новый сеанс браузера, тем самым обеспечивая, чтобы никокая
         ## информация от Эдит не прошла через данные cookie и пр.
         self.browser.quit()
-        self.browser = webdriver.Chrome()
+        ser = Service('d:\\yandexdriver.exe')
+        options = webdriver.ChromeOptions()
+        self.browser = webdriver.Chrome(service=ser, options=options)
 
         # Френсис посещает домашнюю страницу. Нет никаких признаков списка Эдит.
         self.browser.get(self.live_server_url)
